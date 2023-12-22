@@ -89,13 +89,17 @@ async function run() {
             const filter = { _id: new ObjectId(id) };
             console.log(filter);
             const options = { upsert: true };
-            const updateStatus = req.body;
-            console.log(updateStatus);
+            const updateTask = req.body;
             const updateTaskStatus = {
                 $set: {
-                    status: updateStatus.newStatus,
-
-
+                    status: updateTask.taskItem.newStatus,
+                    title: updateTask.taskItem.title,
+                    priority: updateTask.taskItem.priority,
+                    descriptions: updateTask.taskItem.descriptions,
+                    deadlines: updateTask.taskItem.deadlines,
+                    status: updateTask.taskItem.status,
+                    email: updateTask.taskItem.email
+                    
                 }
             }
             const result = await taskCollection.updateOne(filter, updateTaskStatus, options)
@@ -109,6 +113,7 @@ async function run() {
             res.send(result);
         })
 
+       
 
 
 
