@@ -74,9 +74,7 @@ async function run() {
             try {
                 const email = req.query.email;
                 const query = { email: email };
-                console.log(query);
                 const result = await taskCollection.find(query).toArray();
-                // console.log(result); 
                 res.send(result);
             } catch (error) {
                 console.error("Error fetching posts:", error);
@@ -104,6 +102,12 @@ async function run() {
             res.send(result)
         })
 
+        app.delete('/task/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await taskCollection.deleteOne(query);
+            res.send(result);
+        })
 
 
 
