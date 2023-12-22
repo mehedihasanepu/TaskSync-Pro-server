@@ -70,10 +70,12 @@ async function run() {
 
 
 
-
-        app.get('/allTasks', async (req, res) => {
+        app.get('/allTasks/currentUserTask', async (req, res) => {
             try {
-                const result = await taskCollection.find().toArray();
+                const email = req.query.email;
+                const query = { email: email };
+                console.log(query);
+                const result = await taskCollection.find(query).toArray();
                 // console.log(result); 
                 res.send(result);
             } catch (error) {
@@ -81,6 +83,7 @@ async function run() {
                 res.status(500).send("Error fetching posts");
             }
         });
+
 
 
         app.patch('/allTask/:id', async (req, res) => {
